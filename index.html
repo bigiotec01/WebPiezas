@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Piezas KIA & NISSAN | Repuestos para Hojalatería y Pintura</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --kia-red: #C4122F;
+      --nissan-red: #C3002F;
+      --dark: #0a0a0a;
+      --dark2: #111111;
+      --dark3: #1a1a1a;
+      --silver: #b0b8c1;
+      --light: #f0f0f0;
+      --white: #ffffff;
+      --accent: #e8192c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 70px;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 14px; }
+    .brand-pill {
+      padding: 5px 16px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      border: 2px solid;
+    }
+    .kia-pill    { color: #fff; border-color: var(--kia-red);  background: var(--kia-red); }
+    .nissan-pill { color: #fff; border-color: #e0e0e0; background: transparent; }
+    .nav-tagline { font-size: 0.7rem; color: var(--silver); letter-spacing: 1px; margin-left: 6px; }
+
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a {
+      color: var(--silver);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: white;
+      padding: 9px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .nav-cta:hover { background: #a8001f; transform: scale(1.03); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(196,18,47,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 80% 50%, rgba(195,0,47,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 50% 100%, rgba(180,0,40,0.10) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(196,18,47,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,18,47,0.07) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: perspective(600px) rotateX(20deg) scale(1.3);
+      transform-origin: bottom;
+    }
+
+    .brand-oval {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid;
+      opacity: 0.06;
+      animation: pulse 4s ease-in-out infinite alternate;
+    }
+    .oval1 { width:600px; height:300px; top:10%; left:-5%;   border-color: var(--kia-red);   animation-delay: 0s; }
+    .oval2 { width:700px; height:350px; top:30%; right:-8%;  border-color: var(--nissan-red); animation-delay: 1s; }
+    .oval3 { width:400px; height:200px; bottom:5%; left:30%; border-color: var(--accent);     animation-delay: 2s; }
+
+    @keyframes pulse {
+      from { opacity: 0.04; transform: scale(1); }
+      to   { opacity: 0.12; transform: scale(1.04); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      max-width: 800px;
+    }
+
+    .hero-brands {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .hero-brand-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 50px;
+      border-radius: 6px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+    .kia-badge    { background: var(--kia-red); color: white; font-size: 1.4rem; }
+    .nissan-badge { background: transparent; color: white; border: 2px solid #ccc; letter-spacing: 2px; font-size: 1rem; }
+
+    .hero-divider { width: 2px; height: 50px; background: linear-gradient(to bottom, transparent, var(--silver), transparent); }
+
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .hero-title span { color: var(--accent); }
+
+    .hero-subtitle {
+      margin: 20px auto 36px;
+      max-width: 580px;
+      font-size: 1.1rem;
+      color: var(--silver);
+      line-height: 1.7;
+    }
+
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      border: 2px solid var(--accent);
+    }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--silver);
+      padding: 14px 34px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: 2px solid var(--silver);
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: white; color: white; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--silver);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 20px; height: 20px;
+      border-right: 2px solid var(--silver);
+      border-bottom: 2px solid var(--silver);
+      transform: rotate(45deg);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* STRIP */
+    .brand-strip { background: var(--accent); padding: 14px 0; overflow: hidden; }
+    .strip-track {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .strip-track span {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+    }
+    .strip-track span::before { content: '— '; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SECTION GENERIC */
+    section { padding: 90px 40px; }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--silver);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+    .center { text-align: center; margin: 0 auto; }
+
+    /* SERVICIOS */
+    #servicios { background: var(--dark2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 24px;
+      margin-top: 50px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .service-card {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 30px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+    .service-card:hover { border-color: rgba(196,18,47,0.4); transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 50px; height: 50px;
+      background: rgba(196,18,47,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 1.5rem;
+    }
+    .service-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .service-card p  { font-size: 0.88rem; color: var(--silver); line-height: 1.6; }
+
+    /* MARCAS */
+    #marcas { background: var(--dark); }
+
+    .brands-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 900px;
+      margin: 50px auto 0;
+    }
+
+    .brand-card {
+      border-radius: 12px;
+      padding: 40px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kia-card    { background: linear-gradient(135deg, #1a0006 0%, #2d0010 50%, #1a0006 100%); border: 1px solid rgba(196,18,47,0.3); }
+    .nissan-card { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%); border: 1px solid rgba(200,200,200,0.15); }
+
+    .brand-card-name {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+    }
+    .kia-card .brand-card-name    { color: var(--kia-red); }
+    .nissan-card .brand-card-name { color: var(--silver); }
+
+    .brand-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .brand-card ul li {
+      font-size: 0.9rem;
+      color: var(--silver);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .brand-card ul li::before { content: 'o'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* COTIZACION */
+    #cotizacion { background: var(--dark2); }
+
+    .quote-wrapper {
+      max-width: 760px;
+      margin: 50px auto 0;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--kia-red), var(--nissan-red));
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .form-full { grid-column: 1 / -1; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--silver);
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      background: rgba(196,18,47,0.06);
+    }
+    .form-group select option { background: #1a1a1a; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit { margin-top: 30px; text-align: center; }
+    .form-submit button {
+      background: var(--accent);
+      color: white;
+      padding: 15px 50px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      max-width: 320px;
+    }
+    .form-submit button:hover { background: #a8001f; transform: translateY(-2px); }
+    .form-note { text-align: center; margin-top: 16px; font-size: 0.8rem; color: rgba(176,184,193,0.6); }
+
+    .success-msg {
+      display: none;
+      background: rgba(0,180,80,0.1);
+      border: 1px solid rgba(0,180,80,0.4);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      color: #4ade80;
+      font-size: 1rem;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    /* CONTACTO */
+    #contacto { background: var(--dark); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 50px auto 0;
+    }
+
+    .contact-card {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .contact-card:hover { border-color: rgba(196,18,47,0.4); }
+    .contact-card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .contact-card h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .contact-card p, .contact-card a {
+      font-size: 0.95rem;
+      color: var(--silver);
+      text-decoration: none;
+      line-height: 1.6;
+    }
+    .contact-card a:hover { color: white; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark2);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-brand { display: flex; gap: 10px; align-items: center; }
+    .footer-copy  { font-size: 0.8rem; color: rgba(176,184,193,0.5); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 70px 20px; }
+      .brands-layout { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .quote-wrapper { padding: 30px 20px; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+    <span class="nav-tagline">Repuestos Originales</span>
+  </div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#marcas">Marcas</a>
+    <a href="#cotizacion">Cotizar</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a href="#cotizacion" class="nav-cta">Solicitar Cotizacion</a>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="brand-oval oval1"></div>
+  <div class="brand-oval oval2"></div>
+  <div class="brand-oval oval3"></div>
+
+  <div class="hero-content">
+    <div class="hero-brands">
+      <div class="hero-brand-badge kia-badge">KIA</div>
+      <div class="hero-divider"></div>
+      <div class="hero-brand-badge nissan-badge">NISSAN</div>
+    </div>
+
+    <h1 class="hero-title">
+      Piezas y Repuestos<br>
+      <span>para Hojalateria</span><br>
+      y Pintura
+    </h1>
+
+    <p class="hero-subtitle">
+      Distribuidor especializado en piezas de carroceria para vehiculos KIA y NISSAN.
+      Cotizaciones rapidas, piezas de calidad y despacho oportuno para tu taller.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#cotizacion" class="btn-primary">Solicitar Cotizacion</a>
+      <a href="#marcas" class="btn-outline">Ver Piezas</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Desliza</div>
+</section>
+
+
+<!-- STRIP -->
+<div class="brand-strip">
+  <div class="strip-track">
+    <span>Piezas KIA</span>
+    <span>Piezas NISSAN</span>
+    <span>Guardafangos</span>
+    <span>Capos</span>
+    <span>Puertas</span>
+    <span>Paragolpes</span>
+    <span>Aletas</span>
+    <span>Parrillas</span>
+    <span>Retrovisores</span>
+    <span>Maleteros</span>
+    <span>Piezas KIA</span>
+    <span>Piezas NISSAN</span>
+    <span>Guardafangos</span>
+    <span>Capos</span>
+    <span>Puertas</span>
+    <span>Paragolpes</span>
+    <span>Aletas</span>
+    <span>Parrillas</span>
+    <span>Retrovisores</span>
+    <span>Maleteros</span>
+  </div>
+</div>
+
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="center">
+    <p class="section-label">Lo que ofrecemos</p>
+    <h2 class="section-title">Servicios para tu Taller</h2>
+    <p class="section-sub center">Piezas disponibles para talleres de hojalateria y pintura con atencion personalizada y entrega eficiente.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">&#128663;</div>
+      <h3>Piezas de Carroceria</h3>
+      <p>Guardafangos, capos, maleteros, puertas y aletas para KIA y NISSAN.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128295;</div>
+      <h3>Paragolpes y Parrillas</h3>
+      <p>Delanteros y traseros. Parrillas originales con acabado de fabrica listas para pintar.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128269;</div>
+      <h3>Cotizacion Rapida</h3>
+      <p>Envianos el modelo, año y pieza requerida. Respondemos en el menor tiempo posible.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128666;</div>
+      <h3>Despacho a Taller</h3>
+      <p>Coordinamos la entrega directamente en tu taller para mayor comodidad y agilidad.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128196;</div>
+      <h3>Asesoria Tecnica</h3>
+      <p>Te ayudamos a identificar la pieza correcta segun el numero de chasis o modelo exacto.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9989;</div>
+      <h3>Piezas de Calidad</h3>
+      <p>Trabajamos con repuestos de calidad garantizada para una reparacion profesional.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- MARCAS -->
+<section id="marcas">
+  <div class="center">
+    <p class="section-label">Especializacion</p>
+    <h2 class="section-title">Marcas que Manejamos</h2>
+    <p class="section-sub center">Piezas de carroceria disponibles para los modelos mas comunes en talleres de hojalateria.</p>
+  </div>
+
+  <div class="brands-layout">
+    <div class="brand-card kia-card">
+      <div class="brand-card-name">KIA</div>
+      <ul>
+        <li>Sportage / Sportage R</li>
+        <li>Sorento / Sorento R</li>
+        <li>Rio / Rio X-Line</li>
+        <li>Picanto / Morning</li>
+        <li>Stinger / K5</li>
+        <li>Cerato / Forte</li>
+        <li>Soul / Carnival</li>
+        <li>Telluride / EV6</li>
+      </ul>
+    </div>
+    <div class="brand-card nissan-card">
+      <div class="brand-card-name">NISSAN</div>
+      <ul>
+        <li>Frontier / Navara</li>
+        <li>Pathfinder / X-Trail</li>
+        <li>Murano / Rogue</li>
+        <li>Altima / Sentra</li>
+        <li>Versa / March</li>
+        <li>Kicks / Juke</li>
+        <li>Armada / Patrol</li>
+        <li>Titan / NV200</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- COTIZACION -->
+<section id="cotizacion">
+  <div class="center">
+    <p class="section-label">Solicita ahora</p>
+    <h2 class="section-title">Formulario de Cotizacion</h2>
+    <p class="section-sub center">Completa el formulario y te respondemos con disponibilidad y precios a la brevedad.</p>
+  </div>
+
+  <div class="quote-wrapper">
+    <form id="quoteForm">
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Nombre del Taller *</label>
+          <input type="text" placeholder="Ej: Taller El Maestro" required />
+        </div>
+
+        <div class="form-group">
+          <label>Nombre de Contacto *</label>
+          <input type="text" placeholder="Tu nombre" required />
+        </div>
+
+        <div class="form-group">
+          <label>Telefono / WhatsApp *</label>
+          <input type="tel" placeholder="+1 000 000 0000" required />
+        </div>
+
+        <div class="form-group">
+          <label>Correo Electronico</label>
+          <input type="email" placeholder="correo@ejemplo.com" />
+        </div>
+
+        <div class="form-group">
+          <label>Marca del Vehiculo *</label>
+          <select required>
+            <option value="" disabled selected>Seleccionar marca</option>
+            <option>KIA</option>
+            <option>NISSAN</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Modelo del Vehiculo *</label>
+          <input type="text" placeholder="Ej: Sportage, Frontier, Altima..." required />
+        </div>
+
+        <div class="form-group">
+          <label>Año del Vehiculo *</label>
+          <input type="number" placeholder="Ej: 2019" min="2000" max="2026" required />
+        </div>
+
+        <div class="form-group">
+          <label>Pieza Requerida *</label>
+          <input type="text" placeholder="Ej: Guardafango delantero izquierdo" required />
+        </div>
+
+        <div class="form-group form-full">
+          <label>Descripcion del Dano / Detalles Adicionales</label>
+          <textarea placeholder="Describe el dano, si tienes numero de pieza OEM, color del vehiculo u otra informacion relevante..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-submit">
+        <button type="submit">Enviar Cotizacion</button>
+        <p class="form-note">Te responderemos lo antes posible con disponibilidad y precio.</p>
+      </div>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      Cotizacion recibida! Te contactaremos pronto con disponibilidad y precios.
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="center">
+    <p class="section-label">Comunicate</p>
+    <h2 class="section-title">Contacto Directo</h2>
+    <p class="section-sub center">Estamos disponibles para atender a tu taller de forma rapida y personalizada.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="icon">&#128242;</div>
+      <h4>WhatsApp</h4>
+      <a href="#">+1 (000) 000-0000</a>
+    </div>
+    <div class="contact-card">
+      <div class="icon">&#128231;</div>
+      <h4>Correo</h4>
+      <a href="#">repuestos@ejemplo.com</a>
+    </div>
+    <div class="contact-card">
+      <div class="icon">&#128205;</div>
+      <h4>Ubicacion</h4>
+      <p>Tu ciudad, Pais</p>
+    </div>
+    <div class="contact-card">
+      <div class="icon">&#128336;</div>
+      <h4>Horario</h4>
+      <p>Lun – Sab<br>8:00 am – 6:00 pm</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+  </div>
+  <p class="footer-copy">
+    &copy; 2026 &nbsp;|&nbsp; Repuestos para Hojalateria y Pintura &nbsp;|&nbsp; Todos los derechos reservados
+  </p>
+</footer>
+
+
+<script>
+  // Formulario de cotizacion
+  document.getElementById('quoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  });
+
+  // Navbar activo al hacer scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current
+        ? 'var(--accent)' : '';
+    });
+  });
+
+  // Animacion de entrada para cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .brand-card, .contact-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
