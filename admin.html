@@ -453,6 +453,9 @@ function loadCotizaciones() {
       allCotizaciones = snap.docs.map(d => ({ id:d.id, ...d.data() }));
       renderCotizaciones(allCotizaciones);
       updateStats();
+    }, err => {
+      document.getElementById('cot-tbody').innerHTML =
+        '<tr class="loading-row"><td colspan="6" style="color:#ff6b6b">&#9888; Error de permisos en Firestore. Verifica las reglas en Firebase Console.<br><small style="opacity:.7">' + err.message + '</small></td></tr>';
     });
 }
 
@@ -561,6 +564,9 @@ function loadChats() {
       if (unread > 0) { badge.textContent = unread; badge.style.display = 'inline-block'; }
       else badge.style.display = 'none';
       document.getElementById('stat-chats').textContent = allChats.filter(c => !c.cerrado).length;
+    }, err => {
+      document.getElementById('chat-list').innerHTML =
+        '<div style="padding:30px;text-align:center;color:#ff6b6b;font-size:.88rem">&#9888; Error de permisos en Firestore.<br><small style="opacity:.7">' + err.message + '</small></div>';
     });
 }
 
