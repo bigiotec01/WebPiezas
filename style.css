@@ -114,6 +114,12 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,10
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--accent); background:rgba(196,18,47,.06); }
 .form-group select option { background:#1a1a1a; }
 .form-group textarea { resize:vertical; min-height:120px; }
+.form-terms { margin-top:24px; }
+.terms-check { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+.terms-check input[type="checkbox"] { width:16px; height:16px; min-width:16px; margin-top:2px; accent-color:var(--accent); cursor:pointer; }
+.terms-check span { font-size:.83rem; color:var(--silver); line-height:1.5; }
+.terms-check a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(232,25,44,.4); transition:color .2s,border-color .2s; }
+.terms-check a:hover { color:white; border-color:white; }
 .form-submit { margin-top:30px; text-align:center; }
 .form-submit button { background:var(--accent); color:white; padding:15px 50px; border:none; border-radius:6px; font-size:1rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .2s; width:100%; max-width:320px; }
 .form-submit button:hover { background:#a8001f; transform:translateY(-2px); }
