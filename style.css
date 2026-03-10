@@ -82,6 +82,16 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,10
 [data-anim-delay="5"] { transition-delay:.5s; }
 [data-anim-delay="6"] { transition-delay:.6s; }
 
+/* ── VENDEDOR ── */
+.vendedor-layout { display:flex; align-items:center; gap:40px; max-width:860px; margin:0 auto; }
+.vendedor-avatar { width:100px; height:100px; min-width:100px; border-radius:50%; background:linear-gradient(135deg,var(--kia-red),#6b0014); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:900; color:white; letter-spacing:2px; border:3px solid rgba(196,18,47,.4); box-shadow:0 0 40px rgba(196,18,47,.2); }
+.vendedor-label { font-size:.7rem; letter-spacing:4px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+.vendedor-name { font-size:clamp(1.8rem,3vw,2.6rem); font-weight:900; color:var(--white); letter-spacing:1px; margin-bottom:14px; }
+.vendedor-desc { font-size:.92rem; color:var(--silver); line-height:1.75; max-width:560px; margin-bottom:22px; }
+.vendedor-wa { display:inline-flex; align-items:center; gap:9px; background:#25D366; color:white; padding:12px 26px; border-radius:8px; text-decoration:none; font-weight:700; font-size:.9rem; transition:all .2s; }
+.vendedor-wa:hover { background:#1da851; transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,211,102,.25); }
+@media (max-width:768px) { .vendedor-layout { flex-direction:column; text-align:center; } .vendedor-desc { max-width:100%; } }
+
 /* ── PAGE BANNER (interior pages) ── */
 /* Para usar foto real: agrega class "page-banner--photo" y pon la imagen en --banner-img */
 .page-banner {
