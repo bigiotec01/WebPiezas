@@ -504,6 +504,45 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="firebase-config.js"></script>
+<!-- ── EmailJS SDK ── -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ─── EMAILJS CONFIG ───────────────────────────────────────
+  // 1. Ve a https://www.emailjs.com y crea una cuenta gratuita
+  // 2. Add New Service → Gmail → conecta ibigio@medinaauto.com
+  // 3. Email Templates → Create Template con estos campos:
+  //      Subject:  Nuevo mensaje de chat - {{nombre}}
+  //      Body:     {{nombre}} escribio: {{mensaje}}
+  //                Hora: {{hora}}
+  //                Responder desde: piezas.bigios.com/admin.html
+  // 4. Reemplaza los 3 valores de abajo con tus IDs reales
+  // ─────────────────────────────────────────────────────────
+  const EJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';   // Account → API Keys
+  const EJS_SERVICE_ID  = 'TU_SERVICE_ID';   // Email Services → Service ID
+  const EJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';  // Email Templates → Template ID
+
+  emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
+  function notifyAdminChat(nombre, mensaje) {
+    if (EJS_PUBLIC_KEY === 'TU_PUBLIC_KEY') return; // no configurado aun
+    emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      nombre:  nombre,
+      mensaje: mensaje,
+      hora:    new Date().toLocaleString('es', { dateStyle:'short', timeStyle:'short' }),
+      link:    'https://piezas.bigios.com/admin.html'
+    }).catch(() => {}); // silencioso si falla
+  }
+
+  function notifyAdminCotizacion(taller, pieza, marca, modelo) {
+    if (EJS_PUBLIC_KEY === 'TU_PUBLIC_KEY') return;
+    emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      nombre:  taller,
+      mensaje: marca + ' ' + modelo + ' — ' + pieza,
+      hora:    new Date().toLocaleString('es', { dateStyle:'short', timeStyle:'short' }),
+      link:    'https://piezas.bigios.com/admin.html'
+    }).catch(() => {});
+  }
+</script>
 
 <script>
 // ─────────────────────────────────────────
@@ -539,6 +578,13 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
       estado:      'nuevo',
       leido:       false
     });
+    // Notificar por email
+    notifyAdminCotizacion(
+      document.getElementById('f-taller').value.trim(),
+      document.getElementById('f-pieza').value.trim(),
+      document.getElementById('f-marca').value,
+      document.getElementById('f-modelo').value.trim()
+    );
     this.style.display = 'none';
     document.getElementById('successMsg').style.display = 'block';
   } catch (err) {
@@ -642,6 +688,12 @@ async function sendMessage() {
     de:        'cliente',
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   });
+
+  // Notificar a Ismael por email (solo el primer mensaje de cada conversacion)
+  if (!localStorage.getItem('wb_notified_' + chatId)) {
+    notifyAdminChat(chatName, txt);
+    localStorage.setItem('wb_notified_' + chatId, '1');
+  }
 }
 
 function subscribeChat() {
