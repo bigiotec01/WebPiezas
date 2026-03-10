@@ -777,6 +777,35 @@ document.querySelectorAll('.service-card, .brand-card, .contact-card').forEach(e
   el.style.transition = 'opacity .5s ease, transform .5s ease';
   observer.observe(el);
 });
+
+// ─────────────────────────────────────────
+//  SONIDO DE HOVER (Web Audio API)
+// ─────────────────────────────────────────
+let audioCtx = null;
+
+function playHover() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc  = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(640, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(820, audioCtx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch(e) {}
+}
+
+// Aplicar a botones, enlaces y cards
+document.querySelectorAll(
+  'a, button, .service-card, .contact-card, .brand-card, .nav-cta, .btn-primary, .btn-outline'
+).forEach(el => {
+  el.addEventListener('mouseenter', playHover);
+});
 </script>
 </body>
 </html>
