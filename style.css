@@ -11,9 +11,9 @@ body { font-family:'Segoe UI',Arial,sans-serif; background:var(--dark); color:va
 /* ── NAV ── */
 nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,10,10,.92); backdrop-filter:blur(10px); border-bottom:2px solid var(--accent); display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:70px; }
 .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
-.brand-pill { padding:5px 16px; border-radius:30px; font-size:1rem; font-weight:800; letter-spacing:2px; border:2px solid; }
-.kia-pill    { color:#fff; border-color:var(--kia-red); background:var(--kia-red); }
-.nissan-pill { color:#fff; border-color:#e0e0e0; background:transparent; }
+.brand-kia    { font-size:1.1rem; font-weight:900; letter-spacing:3px; color:var(--kia-red); }
+.brand-nissan { font-size:1.1rem; font-weight:900; letter-spacing:3px; color:var(--silver); }
+.brand-sep    { color:rgba(176,184,193,.25); margin:0 10px; font-weight:300; font-size:1rem; }
 .nav-tagline { font-size:.7rem; color:var(--silver); letter-spacing:1px; margin-left:6px; }
 .nav-links { display:flex; gap:30px; }
 .nav-links a { color:var(--silver); text-decoration:none; font-size:.88rem; letter-spacing:1px; text-transform:uppercase; transition:color .2s; }
