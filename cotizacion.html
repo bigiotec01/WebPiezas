@@ -82,14 +82,9 @@
           <textarea id="f-descripcion" placeholder="Describe el dano, numero de pieza OEM, color del vehiculo u otra informacion relevante..."></textarea>
         </div>
         <div class="form-group form-full">
-          <label>Adjuntar Estimado o Fotos del Dano <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional &mdash; PDF, JPG, PNG, max 5 MB)</span></label>
-          <label class="file-upload-label" for="f-adjunto">
-            <span class="file-upload-icon">&#128206;</span>
-            <span id="file-label-text">Haz clic aqui para seleccionar tu archivo</span>
-          </label>
-          <input type="file" id="f-adjunto" accept=".pdf,.jpg,.jpeg,.png,.webp" />
-          <div class="file-selected-name" id="file-selected-name"></div>
-          <div class="upload-progress" id="upload-progress"><div class="upload-progress-bar" id="upload-bar"></div></div>
+          <label>Enlace a Estimado o Fotos <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional &mdash; Google Drive, Dropbox, foto de WhatsApp, etc.)</span></label>
+          <input type="url" id="f-adjunto-url" placeholder="https://drive.google.com/... o cualquier enlace compartido" />
+          <p style="font-size:.75rem;color:rgba(176,184,193,.45);margin-top:5px;">Sube tu estimado a Google Drive o toma una foto y comparte el enlace aqui.</p>
         </div>
       </div>
       <div class="form-submit">
@@ -146,67 +141,19 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
-<script>const storage = firebase.storage();</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="emailjs-config.js"></script>
 <script src="chat.js"></script>
 <script src="hover.js"></script>
 <script>
-// ── File preview ──
-document.getElementById('f-adjunto').addEventListener('change', function() {
-  const file    = this.files[0];
-  const nameDiv = document.getElementById('file-selected-name');
-  const label   = document.getElementById('file-label-text');
-  if (file) {
-    if (file.size > 5 * 1024 * 1024) {
-      alert('El archivo supera los 5 MB. Por favor selecciona un archivo mas pequeno.');
-      this.value = '';
-      nameDiv.style.display = 'none';
-      label.textContent = 'Haz clic aqui para seleccionar tu archivo';
-      return;
-    }
-    nameDiv.textContent   = '📎 ' + file.name;
-    nameDiv.style.display = 'block';
-    label.textContent     = 'Cambiar archivo';
-  } else {
-    nameDiv.style.display = 'none';
-    label.textContent     = 'Haz clic aqui para seleccionar tu archivo';
-  }
-});
-
-// ── Form submit ──
 document.getElementById('quoteForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const btn      = document.getElementById('submitBtn');
-  const progress = document.getElementById('upload-progress');
-  const bar      = document.getElementById('upload-bar');
-  btn.disabled   = true;
+  const btn = document.getElementById('submitBtn');
+  btn.disabled    = true;
   btn.textContent = 'Enviando...';
 
   try {
-    let adjunto_url = null, adjunto_nombre = null;
-    const file = document.getElementById('f-adjunto').files[0];
-
-    if (file) {
-      btn.textContent        = 'Subiendo archivo...';
-      progress.style.display = 'block';
-      const safeName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-      const ref      = storage.ref('cotizaciones/' + safeName);
-      const task     = ref.put(file);
-      await new Promise((resolve, reject) => {
-        task.on('state_changed',
-          snap => { bar.style.width = Math.round((snap.bytesTransferred / snap.totalBytes) * 100) + '%'; },
-          reject, resolve
-        );
-      });
-      adjunto_url    = await ref.getDownloadURL();
-      adjunto_nombre = file.name;
-      progress.style.display = 'none';
-    }
-
-    btn.textContent = 'Guardando...';
     const data = {
       taller:      document.getElementById('f-taller').value.trim(),
       contacto:    document.getElementById('f-contacto').value.trim(),
@@ -221,8 +168,8 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
       estado:      'nuevo',
       leido:       false
     };
-    if (adjunto_url)    data.adjunto_url    = adjunto_url;
-    if (adjunto_nombre) data.adjunto_nombre = adjunto_nombre;
+    const enlace = document.getElementById('f-adjunto-url').value.trim();
+    if (enlace) data.adjunto_url = enlace;
 
     await db.collection('cotizaciones').add(data);
     if (typeof window.notifyAdminCotizacion === 'function') {
@@ -232,9 +179,8 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
     document.getElementById('successMsg').style.display = 'block';
   } catch (err) {
     console.error(err);
-    progress.style.display = 'none';
-    btn.disabled            = false;
-    btn.textContent         = 'Enviar Cotizacion';
+    btn.disabled    = false;
+    btn.textContent = 'Enviar Cotizacion';
     alert('Error al enviar. Por favor intenta de nuevo.');
   }
 });
