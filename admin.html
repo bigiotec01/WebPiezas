@@ -319,6 +319,11 @@
       <div class="panel" id="panel-chats">
         <div class="panel-header">
           <h2>Conversaciones de Chat</h2>
+          <select class="panel-filter" id="filter-chats">
+            <option value="activas">Activas</option>
+            <option value="cerradas">Cerradas</option>
+            <option value="todas">Todas</option>
+          </select>
         </div>
         <div class="table-wrap chat-list" id="chat-list">
           <div style="padding:40px;text-align:center;color:var(--silver);opacity:.4;font-size:.9rem;">Cargando conversaciones...</div>
@@ -358,6 +363,11 @@
     <div class="modal-footer">
       <textarea id="admin-reply-input" placeholder="Escribe tu respuesta..."></textarea>
       <button class="modal-reply-btn" id="admin-reply-btn">Enviar</button>
+    </div>
+    <div style="padding:10px 18px 14px;display:flex;justify-content:flex-end;">
+      <button id="close-chat-btn" style="background:transparent;border:1px solid rgba(255,100,100,.3);color:#ff6b6b;padding:6px 16px;border-radius:5px;font-size:.78rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(255,100,100,.1)'" onmouseout="this.style.background='transparent'">
+        &#10006; Cerrar conversacion
+      </button>
     </div>
   </div>
 </div>
@@ -518,49 +528,70 @@ async function updateEstado(estado) {
 // ─────────────────────────────────────────
 //  CHATS
 // ─────────────────────────────────────────
+let allChats = [];
+
+document.getElementById('filter-chats').addEventListener('change', function() {
+  applyFilterChats(this.value);
+});
+
+function applyFilterChats(filtro) {
+  let filtered = allChats;
+  if (filtro === 'activas')  filtered = allChats.filter(c => !c.cerrado);
+  if (filtro === 'cerradas') filtered = allChats.filter(c =>  c.cerrado);
+  renderChatList(filtered);
+}
+
 function loadChats() {
   db.collection('chats')
     .orderBy('timestamp', 'desc')
     .onSnapshot(snap => {
-      const chats = snap.docs.map(d => ({ id:d.id, ...d.data() }));
-      renderChatList(chats);
-      // Actualizar badge
-      const unread = chats.filter(c => !c.leido).length;
+      allChats = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      const filtro = document.getElementById('filter-chats').value;
+      applyFilterChats(filtro);
+      const unread = allChats.filter(c => !c.leido && !c.cerrado).length;
       const badge  = document.getElementById('badge-chat');
       if (unread > 0) { badge.textContent = unread; badge.style.display = 'inline-block'; }
       else badge.style.display = 'none';
-      document.getElementById('stat-chats').textContent = chats.length;
+      document.getElementById('stat-chats').textContent = allChats.filter(c => !c.cerrado).length;
     });
 }
 
 function renderChatList(chats) {
   const list = document.getElementById('chat-list');
   if (!chats.length) {
-    list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--silver);opacity:.4;font-size:.9rem;">Sin conversaciones todavia.</div>';
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--silver);opacity:.4;font-size:.9rem;">Sin conversaciones.</div>';
     return;
   }
   list.innerHTML = chats.map(c => {
     const initials = (c.nombre || '?').charAt(0).toUpperCase();
+    const cerradoTag = c.cerrado ? '<span style="font-size:.68rem;color:#888;border:1px solid #444;padding:2px 8px;border-radius:10px;margin-left:6px;">Cerrada</span>' : '';
     return `
-      <div class="chat-list-item ${!c.leido ? 'unread' : ''}" onclick="openChatModal('${c.id}','${esc(c.nombre)}')">
-        <div class="chat-avatar">${initials}</div>
+      <div class="chat-list-item ${!c.leido && !c.cerrado ? 'unread' : ''}" onclick="openChatModal('${c.id}','${esc(c.nombre)}',${!!c.cerrado})">
+        <div class="chat-avatar" style="${c.cerrado ? 'background:#444;' : ''}">${initials}</div>
         <div class="chat-info">
-          <h4>${esc(c.nombre || 'Anonimo')}</h4>
+          <h4>${esc(c.nombre || 'Anonimo')}${cerradoTag}</h4>
           <p>${esc(c.ultimoMensaje || '')}</p>
         </div>
         <div class="chat-meta">
           <span class="chat-time">${fmtDate(c.timestamp, true)}</span>
-          ${!c.leido ? '<span class="unread-dot"></span>' : ''}
+          ${!c.leido && !c.cerrado ? '<span class="unread-dot"></span>' : ''}
         </div>
       </div>
     `;
   }).join('');
 }
 
-function openChatModal(chatId, nombre) {
+function openChatModal(chatId, nombre, cerrado = false) {
   currentChatId = chatId;
-  document.getElementById('modal-chat-title').textContent = 'Chat con ' + nombre;
+  document.getElementById('modal-chat-title').textContent = 'Chat con ' + nombre + (cerrado ? ' — Cerrada' : '');
   document.getElementById('modal-chat-msgs').innerHTML = '';
+
+  // Mostrar/ocultar controles segun estado
+  const footer    = document.querySelector('.modal-footer');
+  const closeBtn  = document.getElementById('close-chat-btn');
+  footer.style.display   = cerrado ? 'none' : 'flex';
+  closeBtn.style.display = cerrado ? 'none' : 'flex';
+
   openModal('modal-chat');
 
   // Marcar como leido
@@ -590,6 +621,14 @@ function openChatModal(chatId, nombre) {
       body.scrollTop = body.scrollHeight;
     });
 }
+
+// Cerrar conversacion
+document.getElementById('close-chat-btn').addEventListener('click', async () => {
+  if (!currentChatId) return;
+  if (!confirm('Cerrar esta conversacion? Quedara archivada y no podras responder mas.')) return;
+  await db.collection('chats').doc(currentChatId).update({ cerrado: true, leido: true });
+  closeModal('modal-chat');
+});
 
 // Responder como admin
 document.getElementById('admin-reply-btn').addEventListener('click', sendAdminReply);
