@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marcas | Piezas KIA &amp; NISSAN</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+    <span class="nav-tagline">Repuestos Originales</span>
+  </a>
+  <div class="nav-links">
+    <a href="servicios.html">Servicios</a>
+    <a href="marcas.html" class="active">Marcas</a>
+    <a href="cotizacion.html">Cotizar</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+  <a href="cotizacion.html" class="nav-cta">Solicitar Cotizacion</a>
+</nav>
+
+
+<!-- ── PAGE BANNER ── -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <p class="page-banner-label">Especializacion</p>
+    <h1>Marcas que Manejamos</h1>
+    <p>Piezas de carroceria para los modelos mas comunes en talleres de hojalateria y pintura de Puerto Rico.</p>
+  </div>
+</div>
+
+
+<!-- ── BRANDS ── -->
+<div class="section-content dark">
+  <div class="brands-layout">
+    <div class="brand-card kia-card">
+      <div class="brand-card-name">KIA</div>
+      <ul>
+        <li>Sportage</li>
+        <li>Sorento</li>
+        <li>Rio</li>
+        <li>Picanto</li>
+        <li>K5</li>
+        <li>Forte</li>
+        <li>Soul / Carnival</li>
+        <li>Telluride / EV6</li>
+      </ul>
+    </div>
+    <div class="brand-card nissan-card">
+      <div class="brand-card-name">NISSAN</div>
+      <ul>
+        <li>Frontier</li>
+        <li>Pathfinder</li>
+        <li>Murano / Rogue</li>
+        <li>Altima / Sentra</li>
+        <li>Versa</li>
+        <li>Kicks / Juke</li>
+        <li>Armada</li>
+        <li>Titan / NV200</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+  </div>
+  <p class="footer-copy">&copy; 2026 &nbsp;|&nbsp; Ismael Bigio &nbsp;|&nbsp; Repuestos para Hojalateria y Pintura</p>
+</footer>
+
+
+<!-- ── CHAT WIDGET ── -->
+<div id="chat-widget">
+  <button id="chat-toggle" title="Chat con Ismael">
+    <span>&#128172;</span>
+    <span id="chat-badge"></span>
+  </button>
+  <div id="chat-window">
+    <div id="chat-header">
+      <div class="chat-header-info">
+        <h4>Chat con Ismael Bigio</h4>
+        <span>En linea &mdash; Responde rapido</span>
+      </div>
+      <button id="chat-close" title="Cerrar">&#10005;</button>
+    </div>
+    <div id="chat-name-section">
+      <input type="text" id="chat-name-input" placeholder="Tu nombre (para empezar a chatear)" maxlength="40" />
+    </div>
+    <div id="chat-msgs">
+      <p class="chat-empty">Escribe tu nombre y envianos un mensaje.</p>
+    </div>
+    <div id="chat-input-row">
+      <input type="text" id="chat-msg-input" placeholder="Escribe tu mensaje..." maxlength="500" />
+      <button id="chat-send-btn" title="Enviar">&#10148;</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="emailjs-config.js"></script>
+<script src="chat.js"></script>
+<script src="hover.js"></script>
+</body>
+</html>

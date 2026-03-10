@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cotizacion | Piezas KIA &amp; NISSAN</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+    <span class="nav-tagline">Repuestos Originales</span>
+  </a>
+  <div class="nav-links">
+    <a href="servicios.html">Servicios</a>
+    <a href="marcas.html">Marcas</a>
+    <a href="cotizacion.html" class="active">Cotizar</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+  <a href="cotizacion.html" class="nav-cta">Solicitar Cotizacion</a>
+</nav>
+
+
+<!-- ── PAGE BANNER ── -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <p class="page-banner-label">Solicita ahora</p>
+    <h1>Formulario de Cotizacion</h1>
+    <p>Completa el formulario y Ismael te contacta con disponibilidad y precios a la brevedad.</p>
+  </div>
+</div>
+
+
+<!-- ── FORM ── -->
+<div class="section-content dark2">
+  <div class="quote-wrapper">
+    <form id="quoteForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre del Taller *</label>
+          <input type="text" id="f-taller" placeholder="Ej: Taller El Maestro" required />
+        </div>
+        <div class="form-group">
+          <label>Nombre de Contacto *</label>
+          <input type="text" id="f-contacto" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Telefono / WhatsApp *</label>
+          <input type="tel" id="f-telefono" placeholder="+1 787 000 0000" required />
+        </div>
+        <div class="form-group">
+          <label>Correo Electronico</label>
+          <input type="email" id="f-email" placeholder="correo@ejemplo.com" />
+        </div>
+        <div class="form-group">
+          <label>Marca del Vehiculo *</label>
+          <select id="f-marca" required>
+            <option value="" disabled selected>Seleccionar marca</option>
+            <option>KIA</option>
+            <option>NISSAN</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Modelo del Vehiculo *</label>
+          <input type="text" id="f-modelo" placeholder="Ej: Sportage, Frontier..." required />
+        </div>
+        <div class="form-group">
+          <label>Año del Vehiculo *</label>
+          <input type="number" id="f-anio" placeholder="Ej: 2019" min="2000" max="2026" required />
+        </div>
+        <div class="form-group">
+          <label>Pieza Requerida *</label>
+          <input type="text" id="f-pieza" placeholder="Ej: Guardafango delantero izquierdo" required />
+        </div>
+        <div class="form-group form-full">
+          <label>Descripcion del Dano / Detalles Adicionales</label>
+          <textarea id="f-descripcion" placeholder="Describe el dano, numero de pieza OEM, color del vehiculo u otra informacion relevante..."></textarea>
+        </div>
+        <div class="form-group form-full">
+          <label>Adjuntar Estimado o Fotos del Dano <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional &mdash; PDF, JPG, PNG, max 5 MB)</span></label>
+          <label class="file-upload-label" for="f-adjunto">
+            <span class="file-upload-icon">&#128206;</span>
+            <span id="file-label-text">Haz clic aqui para seleccionar tu archivo</span>
+          </label>
+          <input type="file" id="f-adjunto" accept=".pdf,.jpg,.jpeg,.png,.webp" />
+          <div class="file-selected-name" id="file-selected-name"></div>
+          <div class="upload-progress" id="upload-progress"><div class="upload-progress-bar" id="upload-bar"></div></div>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button type="submit" id="submitBtn">Enviar Cotizacion</button>
+        <p class="form-note">Ismael Bigio te respondera lo antes posible.</p>
+      </div>
+    </form>
+    <div class="success-msg" id="successMsg">
+      Cotizacion enviada correctamente. Ismael te contactara pronto con disponibilidad y precios.
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <span class="brand-pill kia-pill">KIA</span>
+    <span class="brand-pill nissan-pill">NISSAN</span>
+  </div>
+  <p class="footer-copy">&copy; 2026 &nbsp;|&nbsp; Ismael Bigio &nbsp;|&nbsp; Repuestos para Hojalateria y Pintura</p>
+</footer>
+
+
+<!-- ── CHAT WIDGET ── -->
+<div id="chat-widget">
+  <button id="chat-toggle" title="Chat con Ismael">
+    <span>&#128172;</span>
+    <span id="chat-badge"></span>
+  </button>
+  <div id="chat-window">
+    <div id="chat-header">
+      <div class="chat-header-info">
+        <h4>Chat con Ismael Bigio</h4>
+        <span>En linea &mdash; Responde rapido</span>
+      </div>
+      <button id="chat-close" title="Cerrar">&#10005;</button>
+    </div>
+    <div id="chat-name-section">
+      <input type="text" id="chat-name-input" placeholder="Tu nombre (para empezar a chatear)" maxlength="40" />
+    </div>
+    <div id="chat-msgs">
+      <p class="chat-empty">Escribe tu nombre y envianos un mensaje.</p>
+    </div>
+    <div id="chat-input-row">
+      <input type="text" id="chat-msg-input" placeholder="Escribe tu mensaje..." maxlength="500" />
+      <button id="chat-send-btn" title="Enviar">&#10148;</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Scripts ── -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="emailjs-config.js"></script>
+<script src="chat.js"></script>
+<script src="hover.js"></script>
+<script>
+// ── File preview ──
+document.getElementById('f-adjunto').addEventListener('change', function() {
+  const file    = this.files[0];
+  const nameDiv = document.getElementById('file-selected-name');
+  const label   = document.getElementById('file-label-text');
+  if (file) {
+    if (file.size > 5 * 1024 * 1024) {
+      alert('El archivo supera los 5 MB. Por favor selecciona un archivo mas pequeno.');
+      this.value = '';
+      nameDiv.style.display = 'none';
+      label.textContent = 'Haz clic aqui para seleccionar tu archivo';
+      return;
+    }
+    nameDiv.textContent   = '📎 ' + file.name;
+    nameDiv.style.display = 'block';
+    label.textContent     = 'Cambiar archivo';
+  } else {
+    nameDiv.style.display = 'none';
+    label.textContent     = 'Haz clic aqui para seleccionar tu archivo';
+  }
+});
+
+// ── Form submit ──
+document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn      = document.getElementById('submitBtn');
+  const progress = document.getElementById('upload-progress');
+  const bar      = document.getElementById('upload-bar');
+  btn.disabled   = true;
+  btn.textContent = 'Enviando...';
+
+  try {
+    let adjunto_url = null, adjunto_nombre = null;
+    const file = document.getElementById('f-adjunto').files[0];
+
+    if (file) {
+      btn.textContent        = 'Subiendo archivo...';
+      progress.style.display = 'block';
+      const safeName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const ref      = storage.ref('cotizaciones/' + safeName);
+      const task     = ref.put(file);
+      await new Promise((resolve, reject) => {
+        task.on('state_changed',
+          snap => { bar.style.width = Math.round((snap.bytesTransferred / snap.totalBytes) * 100) + '%'; },
+          reject, resolve
+        );
+      });
+      adjunto_url    = await ref.getDownloadURL();
+      adjunto_nombre = file.name;
+      progress.style.display = 'none';
+    }
+
+    btn.textContent = 'Guardando...';
+    const data = {
+      taller:      document.getElementById('f-taller').value.trim(),
+      contacto:    document.getElementById('f-contacto').value.trim(),
+      telefono:    document.getElementById('f-telefono').value.trim(),
+      email:       document.getElementById('f-email').value.trim(),
+      marca:       document.getElementById('f-marca').value,
+      modelo:      document.getElementById('f-modelo').value.trim(),
+      anio:        document.getElementById('f-anio').value.trim(),
+      pieza:       document.getElementById('f-pieza').value.trim(),
+      descripcion: document.getElementById('f-descripcion').value.trim(),
+      timestamp:   firebase.firestore.FieldValue.serverTimestamp(),
+      estado:      'nuevo',
+      leido:       false
+    };
+    if (adjunto_url)    data.adjunto_url    = adjunto_url;
+    if (adjunto_nombre) data.adjunto_nombre = adjunto_nombre;
+
+    await db.collection('cotizaciones').add(data);
+    if (typeof window.notifyAdminCotizacion === 'function') {
+      window.notifyAdminCotizacion(data.taller, data.pieza, data.marca, data.modelo);
+    }
+    this.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  } catch (err) {
+    console.error(err);
+    progress.style.display = 'none';
+    btn.disabled            = false;
+    btn.textContent         = 'Enviar Cotizacion';
+    alert('Error al enviar. Por favor intenta de nuevo.');
+  }
+});
+</script>
+</body>
+</html>
