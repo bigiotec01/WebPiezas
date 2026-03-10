@@ -38,6 +38,19 @@
 //    }
 //  }
 // ─────────────────────────────────────────────────────────────
+//
+// 10. Reglas de Firebase Storage (Storage > Reglas):
+// ─────────────────────────────────────────────────────────────
+//  rules_version = '2';
+//  service firebase.storage {
+//    match /b/{bucket}/o {
+//      match /cotizaciones/{fileName} {
+//        allow write: if true;                   // clientes pueden subir
+//        allow read:  if request.auth != null;   // solo admin puede descargar
+//      }
+//    }
+//  }
+// ─────────────────────────────────────────────────────────────
 
 const firebaseConfig = {
   apiKey:            "AIzaSyDuDqxJ53NhQqZe67nFgEphN4CWyvwIT-I",
@@ -50,5 +63,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const db   = firebase.firestore();
-const auth = firebase.auth();
+const db      = firebase.firestore();
+const auth    = firebase.auth();
+const storage = firebase.storage();

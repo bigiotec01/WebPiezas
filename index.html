@@ -135,6 +135,20 @@
     .form-note { text-align:center; margin-top:16px; font-size:.8rem; color:rgba(176,184,193,.6); }
     .success-msg { display:none; background:rgba(0,180,80,.1); border:1px solid rgba(0,180,80,.4); border-radius:8px; padding:24px; text-align:center; color:#4ade80; font-size:1rem; margin-top:20px; font-weight:600; }
 
+    /* ── FILE UPLOAD ── */
+    .file-upload-label {
+      display:flex; align-items:center; gap:12px;
+      background:rgba(255,255,255,.04); border:1px dashed rgba(255,255,255,.18);
+      border-radius:6px; padding:14px 16px; cursor:pointer; transition:all .2s;
+      color:var(--silver); font-size:.88rem;
+    }
+    .file-upload-label:hover { border-color:var(--accent); color:var(--white); background:rgba(196,18,47,.06); }
+    .file-upload-icon { font-size:1.3rem; flex-shrink:0; }
+    #f-adjunto { display:none; }
+    .file-selected-name { font-size:.78rem; color:var(--accent); margin-top:6px; display:none; padding-left:2px; }
+    .upload-progress { margin-top:8px; height:3px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; display:none; }
+    .upload-progress-bar { height:100%; background:var(--accent); width:0%; transition:width .2s; }
+
     /* ── CONTACTO ── */
     #contacto { background:var(--dark); }
     .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; max-width:900px; margin:50px auto 0; }
@@ -415,6 +429,16 @@
           <label>Descripcion del Dano / Detalles Adicionales</label>
           <textarea id="f-descripcion" placeholder="Describe el dano, numero de pieza OEM, color del vehiculo u otra informacion relevante..."></textarea>
         </div>
+        <div class="form-group form-full">
+          <label>Adjuntar Estimado o Fotos del Dano <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional &mdash; PDF, JPG, PNG, max 5 MB)</span></label>
+          <label class="file-upload-label" for="f-adjunto">
+            <span class="file-upload-icon">&#128206;</span>
+            <span id="file-label-text">Haz clic aqui para seleccionar tu archivo</span>
+          </label>
+          <input type="file" id="f-adjunto" accept=".pdf,.jpg,.jpeg,.png,.webp" />
+          <div class="file-selected-name" id="file-selected-name"></div>
+          <div class="upload-progress" id="upload-progress"><div class="upload-progress-bar" id="upload-bar"></div></div>
+        </div>
       </div>
       <div class="form-submit">
         <button type="submit" id="submitBtn">Enviar Cotizacion</button>
@@ -517,6 +541,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
 <!-- ── EmailJS SDK ── -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -569,16 +594,73 @@ function fmtTime(ts) {
 }
 
 // ─────────────────────────────────────────
+//  ADJUNTO — vista previa del nombre
+// ─────────────────────────────────────────
+document.getElementById('f-adjunto').addEventListener('change', function() {
+  const file    = this.files[0];
+  const nameDiv = document.getElementById('file-selected-name');
+  const label   = document.getElementById('file-label-text');
+  if (file) {
+    if (file.size > 5 * 1024 * 1024) {
+      alert('El archivo supera los 5 MB. Por favor selecciona un archivo mas pequeno.');
+      this.value = '';
+      nameDiv.style.display = 'none';
+      label.textContent = 'Haz clic aqui para seleccionar tu archivo';
+      return;
+    }
+    nameDiv.textContent = '📎 ' + file.name;
+    nameDiv.style.display = 'block';
+    label.textContent = 'Cambiar archivo';
+  } else {
+    nameDiv.style.display = 'none';
+    label.textContent = 'Haz clic aqui para seleccionar tu archivo';
+  }
+});
+
+// ─────────────────────────────────────────
 //  FORMULARIO DE COTIZACION → FIRESTORE
 // ─────────────────────────────────────────
 document.getElementById('quoteForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
+  const btn      = document.getElementById('submitBtn');
+  const progress = document.getElementById('upload-progress');
+  const bar      = document.getElementById('upload-bar');
+  btn.disabled   = true;
   btn.textContent = 'Enviando...';
 
   try {
-    await db.collection('cotizaciones').add({
+    // ── Subir adjunto si existe ──
+    let adjunto_url    = null;
+    let adjunto_nombre = null;
+    const fileInput = document.getElementById('f-adjunto');
+    const file      = fileInput.files[0];
+
+    if (file) {
+      btn.textContent = 'Subiendo archivo...';
+      progress.style.display = 'block';
+      const ext      = file.name.split('.').pop();
+      const safeName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const ref      = storage.ref('cotizaciones/' + safeName);
+      const task     = ref.put(file);
+
+      await new Promise((resolve, reject) => {
+        task.on('state_changed',
+          snap => {
+            const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+            bar.style.width = pct + '%';
+          },
+          reject,
+          resolve
+        );
+      });
+
+      adjunto_url    = await ref.getDownloadURL();
+      adjunto_nombre = file.name;
+      progress.style.display = 'none';
+    }
+
+    btn.textContent = 'Guardando...';
+    const data = {
       taller:      document.getElementById('f-taller').value.trim(),
       contacto:    document.getElementById('f-contacto').value.trim(),
       telefono:    document.getElementById('f-telefono').value.trim(),
@@ -591,7 +673,12 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
       timestamp:   firebase.firestore.FieldValue.serverTimestamp(),
       estado:      'nuevo',
       leido:       false
-    });
+    };
+    if (adjunto_url)    data.adjunto_url    = adjunto_url;
+    if (adjunto_nombre) data.adjunto_nombre = adjunto_nombre;
+
+    await db.collection('cotizaciones').add(data);
+
     // Notificar por email
     notifyAdminCotizacion(
       document.getElementById('f-taller').value.trim(),
@@ -603,6 +690,7 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
     document.getElementById('successMsg').style.display = 'block';
   } catch (err) {
     console.error(err);
+    progress.style.display = 'none';
     btn.disabled = false;
     btn.textContent = 'Enviar Cotizacion';
     alert('Error al enviar. Por favor intenta de nuevo.');
