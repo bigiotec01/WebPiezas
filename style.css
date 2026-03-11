@@ -8,6 +8,50 @@
 html { scroll-behavior:smooth; }
 body { font-family:'Segoe UI',Arial,sans-serif; background:var(--dark); color:var(--light); overflow-x:hidden; }
 
+/* ── CUSTOM CURSOR ── */
+body, a, button, [role="button"], .service-card, .contact-card, .brand-card, .quick-card { cursor:none; }
+@media (pointer:coarse) {
+  body, a, button, [role="button"], .service-card, .contact-card, .brand-card, .quick-card { cursor:auto; }
+  #cursor-dot, #cursor-ring { display:none; }
+}
+#cursor-dot {
+  position:fixed; top:0; left:0; width:6px; height:6px;
+  background:var(--accent); border-radius:50%; pointer-events:none;
+  transform:translate(-50%,-50%); z-index:99999;
+  transition:opacity .3s;
+}
+#cursor-ring {
+  position:fixed; top:0; left:0; width:36px; height:36px;
+  border:2px solid rgba(232,25,44,.5); border-radius:50%; pointer-events:none;
+  transform:translate(-50%,-50%); z-index:99998;
+  transition:width .25s ease, height .25s ease, border-color .25s ease, background .25s ease, opacity .3s;
+}
+#cursor-ring.hovered {
+  width:52px; height:52px;
+  border-color:var(--accent);
+  background:rgba(232,25,44,.08);
+}
+#cursor-ring.clicked {
+  width:18px; height:18px;
+  background:rgba(232,25,44,.3);
+  border-color:var(--accent);
+  transition:width .1s ease, height .1s ease, background .1s ease;
+}
+#cursor-dot.clicked {
+  transform:translate(-50%,-50%) scale(2.5);
+  transition:transform .1s ease;
+}
+.cursor-ripple {
+  position:fixed; border-radius:50%; pointer-events:none; z-index:99997;
+  width:8px; height:8px;
+  background:rgba(232,25,44,.6);
+  transform:translate(-50%,-50%) scale(1);
+  animation:cursor-ripple-anim .5s ease-out forwards;
+}
+@keyframes cursor-ripple-anim {
+  to { transform:translate(-50%,-50%) scale(8); opacity:0; }
+}
+
 /* ── NAV ── */
 nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,10,10,.92); backdrop-filter:blur(10px); border-bottom:2px solid var(--accent); display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:70px; }
 .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
