@@ -297,6 +297,58 @@ footer { background:var(--dark2); border-top:1px solid rgba(255,255,255,.07); pa
 #chat-send-btn { background:var(--accent); border:none; border-radius:6px; padding:0 14px; color:white; font-size:.95rem; cursor:pointer; transition:background .2s; flex-shrink:0; }
 #chat-send-btn:hover { background:#a8001f; }
 
+/* ── PROMO ACCESORIOS ── */
+.promo-accesorios { background:var(--dark2); padding:80px 40px; }
+.promo-header { text-align:center; margin-bottom:50px; }
+.promo-badge { display:inline-block; background:var(--accent); color:white; font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 18px; border-radius:20px; margin-bottom:18px; }
+.promo-title { font-size:2rem; font-weight:900; letter-spacing:1px; margin-bottom:14px; }
+.promo-sub { color:var(--silver); font-size:.95rem; max-width:600px; margin:0 auto 32px; line-height:1.6; }
+.promo-brand-discounts { display:flex; align-items:center; justify-content:center; gap:0; margin-top:10px; }
+.promo-discount-kia, .promo-discount-nissan { display:flex; flex-direction:column; align-items:center; padding:20px 48px; border-radius:12px; }
+.promo-discount-kia { background:rgba(196,18,47,.15); border:2px solid var(--kia-red); }
+.promo-discount-nissan { background:rgba(176,184,193,.08); border:2px solid var(--silver); }
+.promo-discount-divider { width:2px; height:80px; background:rgba(255,255,255,.1); margin:0 24px; }
+.discount-pct { font-size:3rem; font-weight:900; line-height:1; }
+.promo-discount-kia .discount-pct { color:var(--kia-red); }
+.promo-discount-nissan .discount-pct { color:var(--silver); }
+.discount-label { font-size:.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-top:6px; }
+.promo-discount-kia .discount-label { color:var(--kia-red); }
+.promo-discount-nissan .discount-label { color:var(--silver); }
+.promo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; max-width:1100px; margin:0 auto; }
+.promo-card { background:var(--dark3); border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.07); transition:transform .25s, box-shadow .25s; }
+.promo-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(232,25,44,.18); }
+.promo-card.featured { border:2px solid var(--accent); box-shadow:0 0 30px rgba(232,25,44,.15); }
+.promo-img-wrap { position:relative; overflow:hidden; aspect-ratio:4/3; }
+.promo-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.promo-card:hover .promo-img-wrap img { transform:scale(1.06); }
+.promo-popular { position:absolute; top:14px; right:14px; background:#ffd700; color:#111; font-size:.65rem; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:1px; text-transform:uppercase; }
+.promo-info { padding:22px 24px 26px; }
+.promo-info h3 { font-size:1.15rem; font-weight:700; margin-bottom:10px; }
+.promo-info p { color:var(--silver); font-size:.85rem; line-height:1.55; margin-bottom:18px; }
+.promo-btn { display:block; text-align:center; background:var(--accent); color:white; padding:11px 0; border-radius:6px; text-decoration:none; font-weight:700; font-size:.88rem; letter-spacing:1px; transition:background .2s, transform .1s; }
+.promo-btn:hover { background:#a8001f; transform:scale(1.02); }
+.promo-footer { text-align:center; margin-top:48px; }
+.promo-footer p { color:var(--silver); font-size:.88rem; margin-bottom:20px; line-height:2; }
+.promo-wa { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:white; padding:12px 28px; border-radius:8px; text-decoration:none; font-weight:700; font-size:.9rem; transition:background .2s, transform .1s; }
+.promo-wa:hover { background:#1aad54; transform:scale(1.03); }
+
+/* ── PROMO CODE BANNER ── */
+.promo-code-banner { background:linear-gradient(135deg, rgba(196,18,47,.12) 0%, rgba(10,10,10,0) 60%), var(--dark3); border-top:2px solid var(--accent); border-bottom:2px solid rgba(196,18,47,.2); padding:50px 40px; }
+.promo-code-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:50px; }
+.promo-code-left { flex:1; }
+.promo-code-eyebrow { font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:12px; }
+.promo-code-left h3 { font-size:1.7rem; font-weight:900; margin-bottom:12px; }
+.promo-code-left p { color:var(--silver); font-size:.9rem; line-height:1.6; }
+.promo-code-right { display:flex; flex-direction:column; align-items:center; gap:14px; flex-shrink:0; }
+.promo-code-label { font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--silver); }
+.promo-code-box { display:flex; align-items:center; gap:14px; background:rgba(0,0,0,.4); border:2px dashed var(--accent); border-radius:10px; padding:16px 24px; }
+.promo-code-text { font-size:2rem; font-weight:900; letter-spacing:8px; color:var(--accent); }
+.promo-code-copy { background:var(--accent); border:none; color:white; padding:8px 16px; border-radius:6px; font-size:.78rem; font-weight:700; cursor:pointer; transition:background .2s; white-space:nowrap; }
+.promo-code-copy:hover { background:#a8001f; }
+.promo-code-hint { font-size:.75rem; color:rgba(176,184,193,.55); text-align:center; transition:color .3s; }
+.promo-code-cta { display:inline-block; background:transparent; border:2px solid var(--accent); color:var(--accent); padding:10px 24px; border-radius:6px; text-decoration:none; font-weight:700; font-size:.85rem; letter-spacing:1px; transition:background .2s, color .2s; }
+.promo-code-cta:hover { background:var(--accent); color:white; }
+
 /* ── RESPONSIVE ── */
 @media (max-width:768px) {
   nav { padding:0 20px; }
@@ -308,4 +360,12 @@ footer { background:var(--dark2); border-top:1px solid rgba(255,255,255,.07); pa
   .quote-wrapper { padding:30px 20px; }
   footer { flex-direction:column; align-items:center; text-align:center; }
   #chat-window { width:300px; right:-4px; }
+  .promo-accesorios { padding:60px 20px; }
+  .promo-grid { grid-template-columns:1fr; gap:20px; }
+  .promo-title { font-size:1.5rem; }
+  .promo-discount-kia, .promo-discount-nissan { padding:16px 28px; }
+  .discount-pct { font-size:2.2rem; }
+  .promo-code-inner { flex-direction:column; gap:30px; text-align:center; }
+  .promo-code-text { font-size:1.5rem; letter-spacing:5px; }
+  .promo-code-banner { padding:40px 20px; }
 }

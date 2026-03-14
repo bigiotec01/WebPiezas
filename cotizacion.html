@@ -93,6 +93,11 @@
           <label>Descripcion del Dano / Detalles Adicionales</label>
           <textarea id="f-descripcion" placeholder="Describe el dano, numero de pieza OEM, color del vehiculo u otra informacion relevante..."></textarea>
         </div>
+        <div class="form-group">
+          <label>Codigo de Promocion <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional)</span></label>
+          <input type="text" id="f-promo" placeholder="Ej: PIEZAS15" maxlength="20" style="text-transform:uppercase;letter-spacing:3px;font-weight:700;" />
+          <p style="font-size:.75rem;color:rgba(176,184,193,.45);margin-top:5px;">Si tienes un codigo de descuento, ingrésalo aquí.</p>
+        </div>
         <div class="form-group form-full">
           <label>Enlace a Estimado o Fotos <span style="color:rgba(176,184,193,.5);font-weight:400;letter-spacing:0">(opcional &mdash; Google Drive, Dropbox, foto de WhatsApp, etc.)</span></label>
           <input type="url" id="f-adjunto-url" placeholder="https://drive.google.com/... o cualquier enlace compartido" />
@@ -181,7 +186,8 @@ document.getElementById('quoteForm').addEventListener('submit', async function(e
       modelo:      document.getElementById('f-modelo').value.trim(),
       anio:        document.getElementById('f-anio').value.trim(),
       pieza:       document.getElementById('f-pieza').value.trim(),
-      descripcion: document.getElementById('f-descripcion').value.trim(),
+      descripcion:  document.getElementById('f-descripcion').value.trim(),
+      codigo_promo: document.getElementById('f-promo').value.trim().toUpperCase() || null,
       timestamp:   firebase.firestore.FieldValue.serverTimestamp(),
       estado:      'nuevo',
       leido:       false

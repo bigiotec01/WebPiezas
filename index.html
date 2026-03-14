@@ -122,6 +122,100 @@
 </div>
 
 
+<!-- ── PROMO ACCESORIOS ── -->
+<section class="promo-accesorios" id="accesorios">
+  <div class="promo-header" data-anim>
+    <span class="promo-badge">&#128293; PROMO ESPECIAL &mdash; ACCESORIOS ORIGINALES</span>
+    <h2 class="promo-title">Grandes Descuentos en Accesorios</h2>
+    <p class="promo-sub">Solo accesorios originales &mdash; precio honrado, este o no la mercancia. &iexcl;Aprovecha mientras dure!</p>
+    <div class="promo-brand-discounts">
+      <div class="promo-discount-kia">
+        <span class="discount-pct">45%</span>
+        <span class="discount-label">OFF en KIA</span>
+      </div>
+      <div class="promo-discount-divider"></div>
+      <div class="promo-discount-nissan">
+        <span class="discount-pct">35%</span>
+        <span class="discount-label">OFF en NISSAN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="promo-grid">
+
+    <div class="promo-card" data-anim data-anim-delay="1">
+      <div class="promo-img-wrap">
+        <img src="Accessrorios/AlfombrasAllWeather.jpg" alt="Alfombras All Weather KIA Nissan" loading="lazy">
+      </div>
+      <div class="promo-info">
+        <h3>Alfombras All Weather</h3>
+        <p>Proteccion total contra lluvia, barro y desgaste. Encajan perfectamente en modelos KIA y NISSAN.</p>
+        <a href="cotizacion.html" class="promo-btn">Pide tu Cotizacion de Precio</a>
+      </div>
+    </div>
+
+    <div class="promo-card featured" data-anim data-anim-delay="2">
+      <div class="promo-img-wrap">
+        <img src="Accessrorios/CargoLiner.jpg" alt="Cargo Liner KIA Nissan" loading="lazy">
+        <span class="promo-popular">MAS POPULAR</span>
+      </div>
+      <div class="promo-info">
+        <h3>Cargo Liner</h3>
+        <p>Forro protector para el area de carga. Resistente, facil de limpiar, ideal para uso diario y trabajo.</p>
+        <a href="cotizacion.html" class="promo-btn">Pide tu Cotizacion de Precio</a>
+      </div>
+    </div>
+
+    <div class="promo-card" data-anim data-anim-delay="3">
+      <div class="promo-img-wrap">
+        <img src="Accessrorios/MudGuard.jpg" alt="Mud Guard KIA Nissan" loading="lazy">
+      </div>
+      <div class="promo-info">
+        <h3>Mud Guards</h3>
+        <p>Guardafangos originales que protegen la carroceria del barro, piedras y suciedad de la carretera.</p>
+        <a href="cotizacion.html" class="promo-btn">Pide tu Cotizacion de Precio</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="promo-footer" data-anim>
+    <p>&#9989; Accesorios OEM originales &nbsp;&bull;&nbsp; &#9989; Disponibles para KIA y NISSAN &nbsp;&bull;&nbsp; &#9989; Entrega rapida en Puerto Rico</p>
+    <a href="https://wa.me/17879386675" target="_blank" class="promo-wa">&#128172; Preguntar por WhatsApp</a>
+  </div>
+</section>
+
+<!-- ── PROMO CODE PIEZAS ── -->
+<div class="promo-code-banner" data-anim>
+  <div class="promo-code-inner">
+    <div class="promo-code-left">
+      <span class="promo-code-eyebrow">&#127381; Oferta en Piezas Originales</span>
+      <h3>15% de Descuento en Piezas</h3>
+      <p>Menciona este codigo al cotizar y te aplicamos un <strong>15% OFF</strong> en piezas originales KIA y NISSAN. Precio honrado, este o no la mercancia.</p>
+    </div>
+    <div class="promo-code-right">
+      <span class="promo-code-label">Tu codigo de promo</span>
+      <div class="promo-code-box" id="promoCodeBox" title="Clic para copiar">
+        <span class="promo-code-text">PIEZAS15</span>
+        <button class="promo-code-copy" onclick="copyPromoCode()">&#128203; Copiar</button>
+      </div>
+      <span class="promo-code-hint" id="promoCopyMsg">Usalo en WhatsApp o en el formulario de cotizacion</span>
+      <a href="cotizacion.html" class="promo-code-cta">Cotizar con Descuento &rarr;</a>
+    </div>
+  </div>
+</div>
+<script>
+function copyPromoCode() {
+  navigator.clipboard.writeText('PIEZAS15').then(function() {
+    var msg = document.getElementById('promoCopyMsg');
+    msg.textContent = '&#10003; Codigo copiado!';
+    msg.style.color = '#4caf50';
+    setTimeout(function(){ msg.textContent = 'Usalo en WhatsApp o en el formulario de cotizacion'; msg.style.color = ''; }, 2500);
+  });
+}
+</script>
+
+
 <!-- ── VENDEDOR ── -->
 <div class="section-content dark2">
   <div class="vendedor-layout" data-anim>
