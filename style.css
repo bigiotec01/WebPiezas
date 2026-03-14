@@ -297,6 +297,12 @@ footer { background:var(--dark2); border-top:1px solid rgba(255,255,255,.07); pa
 #chat-send-btn { background:var(--accent); border:none; border-radius:6px; padding:0 14px; color:white; font-size:.95rem; cursor:pointer; transition:background .2s; flex-shrink:0; }
 #chat-send-btn:hover { background:#a8001f; }
 
+/* ── HERO PROMO LINK ── */
+.hero-promo-link { display:inline-flex; align-items:center; gap:10px; margin-top:28px; position:relative; background:rgba(232,25,44,.1); border:1px solid rgba(232,25,44,.4); color:var(--light); text-decoration:none; padding:10px 22px; border-radius:30px; font-size:.85rem; font-weight:600; letter-spacing:.5px; transition:background .25s, border-color .25s, transform .2s; }
+.hero-promo-link:hover { background:rgba(232,25,44,.2); border-color:var(--accent); transform:scale(1.03); }
+.hero-promo-pulse { display:inline-block; width:9px; height:9px; background:var(--accent); border-radius:50%; flex-shrink:0; animation:hero-pulse 1.5s ease-in-out infinite; }
+@keyframes hero-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(232,25,44,.6)} 50%{box-shadow:0 0 0 7px rgba(232,25,44,0)} }
+
 /* ── PROMO ACCESORIOS ── */
 .promo-accesorios { background:var(--dark2); padding:80px 40px; }
 .promo-header { text-align:center; margin-bottom:50px; }
